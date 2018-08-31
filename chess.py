@@ -2,6 +2,7 @@ import os, time
 from termcolor import colored
 
 state = 1
+skate = 'ton'
 #koordynaty sasiednich pol
 NW = [-1, -1]
 N = [-1, 0]
