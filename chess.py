@@ -1,8 +1,7 @@
-import os, time
+import os, time, sys
 from termcolor import colored
 
 state = 1
-skate = 'ton'
 #koordynaty sasiednich pol
 NW = [-1, -1]
 N = [-1, 0]
@@ -58,12 +57,32 @@ def move(board, board_size):
     while state:
         print "Ruch gracza:", player
         print("Wybierz figure:")
+        # try:
         piece_row = int(raw_input("Podaj wiersz: > ")) - 1
         piece_column = int(raw_input("Podaj kolumne: > ")) - 1
+        # except ValueError:
+        #     print "To nie jest poprawna wartosc! Sprobuj jeszcze raz!"
+        #     move(board, 8)
+        # except KeyboardInterrupt:
+        #     decision_state = 1
+        #     while decision_state:
+        #         decision = raw_input("Czy zakonczyc gre? (T/N)")
+        #         print decision
+        #         if decision == 'T':
+        #             print "KONIEC GRY"
+        #             decision_state == 0;
+        #             sys.exit()
+        #         elif decision == 'N':
+        #             print "Powrot do gry!"
+        #             move(board, 8)
+        # try:
         chosen_piece = board[piece_row][piece_column]
+        # except IndexError:
+        #     print "Wprowadz cyfre od 1 do 8! Sprobuj jeszcze raz!"
+        #     move(board, 8)
         if(chosen_piece == "  "):
             print("Puste pole! Wybierz inne!")
-            time.sleep(3)
+            time.sleep(2)
             move(board, 8)
         elif((chosen_piece.find('1') > -1 and player.find('1') > -1) or (chosen_piece.find('2') > -1 and player.find('2') > -1)):
             print "Wybrano figure:", chosen_piece
@@ -74,47 +93,25 @@ def move(board, board_size):
                 print("Wybor anulowano. Powtorz akcje!")
                 move(board, 8)
             else:
-                print "Gracz", player ,player.find('1')
-                print "Ruszam na", str(board[to_row][to_column]), str(board[to_row][to_column]).find('1')
                 if((str(board[to_row][to_column]).find('1') > -1 and player.find('1') > -1) or (str(board[to_row][to_column]).find('2') > -1 and player.find('2') > -1)):
                     print("Nie mozesz zbic swojej figury!")
-                    time.sleep(3)
+                    time.sleep(2)
                     move(board, 8)
                 elif(str(board[to_row][to_column]) == "  "):
                     print "Ruch na puste pole!"
                     board[to_row][to_column] = chosen_piece
                     board[piece_row][piece_column] = "  "
-                    break #zepsute, gracz sie nie zmienia, moze dodac argument player do move'a
+                    break
                 else:
-                    print "Zbito figure przeciwnika:", chosen_piece
                     board[to_row][to_column] = chosen_piece
+                    print "Zbito figure przeciwnika:", chosen_piece
                     board[piece_row][piece_column] = "  "
-                    # to_piece.append(ch1osen_piece)
                     break
         else:
             print("Nie mozesz ruszac figury przeciwnika!")
-            time.sleep(3)
+            time.sleep(2)
             move(board, 8)
-        #plansza_gracza[wiersz][kolumna] = teraz_odkryte_pole
-		# if [piece_row, piece_column] in empty_fields:
-		# 	print "To pole jest juz odkryte! Odkryj inne"
-		# 	time.sleep(3)
-		# elif teraz_odkryte_pole == 'X':
-		# 	odkryte_pola.append([wiersz, kolumna])
-		# 	os.system('cls')
-		# 	wyswietl_plansze(plansza_oryginal, rozmiar_planszy)
-		# 	print "\n"
-		# 	wyswietl_plansze(plansza_gracza, rozmiar_planszy)
-		# 	print "KONIEC GRY"
-		# 	break
-		# elif teraz_odkryte_pole == 0:
-		# 	odkryte_pola.append([wiersz, kolumna])
-		# 	plansza_gracza, odkryte_pola = odkryj_puste_pola(plansza_gracza, plansza_oryginal, odkryte_pola, rozmiar_planszy)
-		# 	wyswietl_plansze(plansza_oryginal, rozmiar_planszy)
-		# 	print "\n"
-		# 	wyswietl_plansze(plansza_gracza, rozmiar_planszy)
-		# else:
-		# 	odkryte_pola.append([wiersz, kolumna])
+
 if __name__ == "__main__":
     board = create_board(8, "  ")
     while state:
